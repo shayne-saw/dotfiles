@@ -1,0 +1,17 @@
+[user]
+	name = Shayne
+	email = 189136159+shayne-saw@users.noreply.github.com
+  signingKey  = ~/.ssh/id_ed25519
+[init]
+	defaultBranch = main
+[commit]
+	gpgSign = true
+[tag]
+	gpgSign = true
+[core]
+	editor = nvim
+[gpg]
+	format = ssh
+
+[include]
+    path = ~/.gitconfig_local
