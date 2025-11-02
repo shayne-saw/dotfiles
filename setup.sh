@@ -6,9 +6,6 @@ set -eu
 # The directory change does not affect the caller's shell session.
 DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-DIR="$(pwd)"
-echo "PWD: $DIR"
-
 # Check for required commands
 for cmd in git curl; do
   if ! command -v "$cmd" >/dev/null 2>&1; then
