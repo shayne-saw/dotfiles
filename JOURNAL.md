@@ -65,8 +65,17 @@ devpod provider add docker
 
 **To start and connect to a DevPod project:**
 ```sh
-devpod up . --dotfiles https://github.com/shayne-saw/dotfiles -ide none
+devpod up . --dotfiles https://github.com/shayne-saw/dotfiles --ide none
 devbox ssh .
 ```
 
 > Note: This setup ensures `ssh-agent` is used to forward keys into the DevPod container if an agent is running on the host.
+
+Once you are inside the dev container run:
+```bash
+brew install neovim fzf ripgrep fd gitui fastfetch
+```
+
+You also have `asdf` available to install any language dependencies you need for that given project. To make language servers a little easier to run you can make those versions globally available.
+
+TODO: Currently DevPod is making adjustments to the `.gitconfig` file rather than our `.gitconfig_local` inside the container. Likely not an issue because we probably won't be doing a lot of work on the dotfiles while inside a devcontainer.

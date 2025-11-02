@@ -1,9 +1,21 @@
 #!/bin/bash
+set -eu
 
 # Determine the absolute path to the directory containing this script.
 # This uses 'cd' and 'pwd' in a subshell to resolve both relative and absolute script paths.
 # The directory change does not affect the caller's shell session.
 DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
+
+DIR="$(pwd)"
+echo "PWD: $DIR"
+
+# Check for required commands
+for cmd in git curl; do
+  if ! command -v "$cmd" >/dev/null 2>&1; then
+    echo "[ERROR] $cmd is not installed."
+    exit 1
+  fi
+done
 
 if [ ! -f "$HOME/.config/kitty/themes/tokyo-night-kitty.conf" ]; then
   mkdir -p ~/.config/kitty/themes
