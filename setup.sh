@@ -1,6 +1,25 @@
 #!/bin/bash
 set -eu
 
+FULL_INSTALL=false
+
+# Parse arguments
+for arg in "$@"; do
+  case "$arg" in
+  --full)
+    FULL_INSTALL=true
+    ;;
+  esac
+done
+
+if $FULL_INSTALL; then
+  echo "[INFO] Running full machine setup"
+else
+  echo "[INFO] Running headless/container setup"
+  echo "[INSTALLING] neovim and dependencies"
+  brew install neovim fzf ripgrep fd gitui fastfetch
+fi
+
 # Determine the absolute path to the directory containing this script.
 # This uses 'cd' and 'pwd' in a subshell to resolve both relative and absolute script paths.
 # The directory change does not affect the caller's shell session.
