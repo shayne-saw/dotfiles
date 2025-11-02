@@ -12,12 +12,21 @@ if [ ! -f "$HOME/.config/kitty/themes/tokyo-night-kitty.conf" ]; then
   echo "[DOWNLOADING] kitty theme -> .config/kitty/themes/tokyo-night-kitty.conf"
 fi
 
+if [ ! -f "$HOME/.config/nvim/init.lua" ]; then
+  echo "[DOWNLOADING] lazy vim -> .config/nvim"
+
+  git clone https://github.com/LazyVim/starter "$HOME/.config/nvim"
+  rm -rf "$HOME/.config/nvim/.git"
+  rm -rf "$HOME/.config/nvim/init.lua"
+  rm -rf "$HOME/.config/nvim/lua/plugins"
+fi
+
 if [ ! -f "$HOME/.gitconfig_local" ]; then
   cp "$DOTFILES_DIR/gitconfig_local.template" "$HOME/.gitconfig_local"
   echo "[STUBBING] .gitconfig_local  Edit this file for local overrides."
 fi
 
-FILES=(.gitconfig .bashrc .bash_profile .config/kitty/kitty.conf)
+FILES=(.gitconfig .bashrc .bash_profile .config/kitty/kitty.conf .config/nvim/init.lua .config/nvim/lua/plugins)
 
 for file in "${FILES[@]}"; do
   if [ -f "$HOME/$file" ] && [ ! -L "$HOME/$file" ]; then
@@ -27,7 +36,7 @@ for file in "${FILES[@]}"; do
 done
 
 for file in "${FILES[@]}"; do
-  mkdir -p "$(dirname "$HOME/file")"
+  mkdir -p "$(dirname "$HOME/$file")"
   ln -sf "$DOTFILES_DIR/$file" "$HOME/$file"
   echo "[LINKING] $file -> $DOTFILES_DIR/$file"
 done
