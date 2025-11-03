@@ -54,7 +54,7 @@ if [ ! -f "$HOME/.gitconfig_local" ]; then
   echo "[STUBBING] .gitconfig_local  Edit this file for local overrides."
 fi
 
-FILES=(.gitconfig .bashrc .bash_profile .config/kitty/kitty.conf .config/nvim/init.lua .config/nvim/lua/plugins)
+FILES=(.gitconfig .bashrc .bash_profile .config/kitty/kitty.conf .config/nvim/init.lua .config/nvim/lua/plugins .config/nix/nix.conf)
 
 for file in "${FILES[@]}"; do
   if [ -f "$HOME/$file" ] && [ ! -L "$HOME/$file" ]; then

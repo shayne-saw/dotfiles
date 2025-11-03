@@ -79,3 +79,48 @@ brew install neovim fzf ripgrep fd gitui fastfetch
 You also have `asdf` available to install any language dependencies you need for that given project. To make language servers a little easier to run you can make those versions globally available.
 
 TODO: Currently DevPod is making adjustments to the `.gitconfig` file rather than our `.gitconfig_local` inside the container. Likely not an issue because we probably won't be doing a lot of work on the dotfiles while inside a devcontainer.
+
+### Lemonade (Clipboard)
+
+To meet the challenge of enabling clipboard support from the neovim application inside the devcontainer. [Lemonade](https://github.com/lemonade-command/lemonade) is a clipboard provider that neovim calls and it sends the content to the host machine where a lemonade server is running and interacts with the host clipboard.
+
+Installed on the docker container directly via go for now.
+
+```bash
+sudo apt install golang-go
+go install github.com/lemonade-command/lemonade@latest
+export PATH=$PATH:$(go env GOPATH)/bin
+```
+
+To run on the host machine I like using nix.
+
+```bash
+nix run nixpkgs#lemonade server
+```
+
+Nix will download what it needs the first time and binaries will be cached in the nix store so subsequent starts will be fast.
+
+Need to configure neovim because by default lemonade will try to connect to a server at localhost.
+
+```
+:h provider-clipboard describes configuration shown below
+```
+```
+```
+
+Need to add the following to init.lua in the devcontainer neovim config. I haven't added it to this dotfiles project yet because I'm still figuring out how I want to make it conditional based on environment.
+
+```lua
+vim.g.clipboard = {
+	name = "lemonade",
+	copy = {
+		["+"] = "lemonade copy -host=host.docker.internal",
+		["*"] = "lemonade copy -host=host.docker.internal",
+	},
+	paste = {
+		["+"] = "lemonade paste -host=host.docker.internal",
+		["*"] = "lemonade paste -host=host.docker.internal",
+	},
+	cache_enabled = 0,
+}
+```
