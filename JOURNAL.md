@@ -1,6 +1,7 @@
 ## Base System
-https://archlinux.org/
-https://wiki.archlinux.org/title/Main_page
+<https://archlinux.org/>
+<https://wiki.archlinux.org/title/Main_page>
+
 - Arch
 - KDE Plasma
 
@@ -14,6 +15,7 @@ Use `archinstall` interface for installation
 The `setup.sh` script copies existing files with `.backup` suffix and replaces them with symlinks to the dotfiles repo.
 
 ## Git
+
 via pacman
 
 `~/.gitconfig` - symlink to the repo dotfiles
@@ -27,21 +29,24 @@ Can verify proper git configuration by doing `git config --list --show-origin`.
 [Setup GPG Key](https://docs.github.com/en/authentication/managing-commit-signature-verification/generating-a-new-gpg-key)
 
 ## Kitty
+
 <https://sw.kovidgoyal.net/kitty/>  
 _Installed via `pacman`_
 
 Theme gets installed by the `setup.sh`.
 
 ## Neovim  
+
 <https://neovim.io/>  
 _Installed via `pacman`_
 
 ---
 
 ### LazyVim  
+
 <https://www.lazyvim.org/>
 
-#### Dependencies (install via `pacman`):
+#### Dependencies (install via `pacman`)
 
 - `nodejs`, `npm` — for language servers and plugins
 - `fzf`, `ripgrep`, `fd` — for fuzzy finding and searching
@@ -53,17 +58,20 @@ LazyVim is installed by the `setup.sh`. It clones the LazyVim git repo to `~/con
 ---
 
 ### DevPod
+
 <https://devpod.sh/>
 
 - Installed using their `curl` command.
 - Once we get Nix working, DevPod is a prime candidate for packaging: [Nix Packages Search](https://search.nixos.org/packages?channel=25.05&query=devpod).
 
 **To configure DevPod to use local Docker for container management:**
+
 ```sh
 devpod provider add docker
 ```
 
 **To start and connect to a DevPod project:**
+
 ```sh
 devpod up . --dotfiles https://github.com/shayne-saw/dotfiles --ide none
 devbox ssh .
@@ -72,6 +80,7 @@ devbox ssh .
 > Note: This setup ensures `ssh-agent` is used to forward keys into the DevPod container if an agent is running on the host.
 
 Once you are inside the dev container run:
+
 ```bash
 brew install neovim fzf ripgrep fd gitui fastfetch
 ```
@@ -105,6 +114,7 @@ Need to configure neovim because by default lemonade will try to connect to a se
 ```
 :h provider-clipboard describes configuration shown below
 ```
+
 ```
 ```
 
@@ -112,15 +122,15 @@ Need to add the following to init.lua in the devcontainer neovim config. I haven
 
 ```lua
 vim.g.clipboard = {
-	name = "lemonade",
-	copy = {
-		["+"] = "lemonade copy -host=host.docker.internal",
-		["*"] = "lemonade copy -host=host.docker.internal",
-	},
-	paste = {
-		["+"] = "lemonade paste -host=host.docker.internal",
-		["*"] = "lemonade paste -host=host.docker.internal",
-	},
-	cache_enabled = 0,
+ name = "lemonade",
+ copy = {
+  ["+"] = "lemonade copy -host=host.docker.internal",
+  ["*"] = "lemonade copy -host=host.docker.internal",
+ },
+ paste = {
+  ["+"] = "lemonade paste -host=host.docker.internal",
+  ["*"] = "lemonade paste -host=host.docker.internal",
+ },
+ cache_enabled = 0,
 }
 ```
